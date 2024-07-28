@@ -1,0 +1,17 @@
+{% extends "solveur/base.html" %}
+
+{% block title %}Solution du Problème Linéaire{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Solution du Problème Linéaire</h1>
+        <ul>
+            {% for var, value in solution.items %}
+                <li>{{ var }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'solveur:index' %}" class="btn btn-primary">Retour</a>
+    </div>
+</div>
+{% endblock %}

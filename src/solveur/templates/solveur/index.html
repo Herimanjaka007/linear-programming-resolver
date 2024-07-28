@@ -1,0 +1,25 @@
+{% extends 'solveur/base.html' %}
+
+{% block title %}
+  Modélisation et Solveur de Problème Linéaire
+{% endblock %}
+
+{% if error %}
+  <span class="alert alert-danger">{{ error }} coucou</span>
+{% endif %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Modélisation et Solveur de Problème Linéaire</h1>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group mb-5">
+          <label for="imageInput">Télécharger une Image</label>
+          <input type="file" class="form-control-file" id="imageInput" name="image" />
+        </div>
+        <button type="submit" class="btn btn-primary">Modeliser</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

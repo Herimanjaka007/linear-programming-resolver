@@ -1,4 +1,6 @@
 import re
+import google.generativeai as genai
+import json
 
 
 def parse_objective(objective_str):
@@ -19,3 +21,23 @@ def parse_constraints(constraints_list):
             equation = match.group(2)
             constraints.append({"id": constraint_id, "equation": equation})
     return constraints
+
+
+def gemini_generate(prompt):
+    genai.configure(api_key="AIzaSyD83g8POO_8rslMcPD5JrEKdvN7d4Fd-LE")
+    model = genai.GenerativeModel("gemini-1.5-flash")
+
+    response = model.generate_content(prompt)
+    current_res = (
+        response.candidates[0]
+        .content.parts[0]
+        .text.replace("```", "")
+        .replace("\n", "")
+    )
+    json_match = re.search(r"{.*}", current_res)
+
+    if json_match:
+        json_str = json_match.group(0)
+        data = json.loads(json_str)
+        return data
+    return None

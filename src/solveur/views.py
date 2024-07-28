@@ -1,15 +1,9 @@
 from django.shortcuts import redirect, render
 from PIL import Image
 from django.urls import reverse
-import google.generativeai as genai
 import pytesseract
-import re
-import json
 
-from .utils import parse_constraints, parse_objective
-
-genai.configure(api_key="AIzaSyD83g8POO_8rslMcPD5JrEKdvN7d4Fd-LE")
-model = genai.GenerativeModel("gemini-1.5-flash")
+from .utils import parse_constraints, parse_objective, gemini_generate
 
 
 def index(request):
@@ -37,20 +31,7 @@ def index(request):
             """.format(
                 text
             )
-
-            response = model.generate_content(prompt)
-            current_res = (
-                response.candidates[0]
-                .content.parts[0]
-                .text.replace("```", "")
-                .replace("\n", "")
-            )
-            json_match = re.search(r"{.*}", current_res)
-
-            if json_match:
-                json_str = json_match.group(0)
-                data = json.loads(json_str)
-
+            data = gemini_generate(prompt)
             objective = parse_objective(data["Objective"])
             constraints = parse_constraints(data["Constraints"])
             return render(
@@ -77,19 +58,7 @@ def resolve(request):
         
         f{request.POST["lp_problem"]}
 """
-        response = model.generate_content(prompt)
-        current_res = (
-            response.candidates[0]
-            .content.parts[0]
-            .text.replace("```", "")
-            .replace("\n", "")
-        )
-        json_match = re.search(r"{.*}", current_res)
-
-        if json_match:
-            json_str = json_match.group(0)
-            print(json_str)
-            data = json.loads(json_str)
+        data = gemini_generate(prompt)
 
         return render(
             request,

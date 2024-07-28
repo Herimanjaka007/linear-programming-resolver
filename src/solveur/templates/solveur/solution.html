@@ -5,11 +5,12 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container mt-5">
-    <h1>Résultats de la Solution</h1>
-    <div class="card">
+  <a href="{% url 'solveur:index' %}"><i class= "bi bi-arrow-left-circle-fill fs-1"></i></a>
+  <div class="container mt-3">
+    <h1 class="text-center text-primary my-3">Solution optimale du problème</h1>
+    <div class="card mt-5">
       <div class="card-body">
-        <h3>Solutions</h3>
+        <h3 class="my-2">Solutions:</h3>
         <ul class="list-group">
           {% for var, value in data.solution.items %}
             <li class="list-group-item">{{ var }}: {{ value }}</li>
@@ -18,5 +19,4 @@
       </div>
     </div>
   </div>
-  <a href="{% url 'solveur:index' %}" class="btn btn-danger">Retour</a>
 {% endblock %}

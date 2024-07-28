@@ -10,16 +10,18 @@
 
 {% block content %}
   <div class="row">
-    <div class="col-md-12">
-      <h1>Modélisation et Solveur de Problème Linéaire</h1>
+    <section class="col-md-12">
+      <h1 class="my-5 text-primary text-center">Modélisation et résolution de problème linéaire</h1>
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="form-group mb-5">
-          <label for="imageInput">Télécharger une Image</label>
-          <input type="file" class="form-control-file" id="imageInput" name="image"  required/>
+        <div class="form-group my-3 p-4">
+            <h3 class="fs-5 my-2">Télécharger une image décrivant le problème à résoudre:</h3>
+          <div class="input-group my-4">
+            <input type="file" class="form-control form-control-file" id="imageInput"  name="image" required>
+            <button type="submit" class="btn btn-primary">Modéliser</button>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary">Modeliser</button>
       </form>
-    </div>
+    </section>
   </div>
 {% endblock %}

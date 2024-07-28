@@ -5,25 +5,25 @@
 {% endblock %}
 
 {% block content %}
+  <a href="{% url 'solveur:index' %}"><i class= "bi bi-arrow-left-circle-fill fs-1"></i></a>
   <div class="row">
     <div class="col-md-12">
-      <h1 class="mb-5">🤖 Résultats de la Modélisation</h1>
+      <h1 class="my-3 text-center text-primary">Résultat de la modélisation</h1>
       <h2>Objectif</h2>
       <p>{{ result.objective.type }}: {{ result.objective.equation }}</p>
 
       <h2>Contraintes</h2>
       <ul class="list-group">
         {% for constraint in result.constraints %}
-          <li class="list-group-item">{{ constraint.equation }} (contraintes {{ constraint.id }})</li>
+          <li class="list-group-item">{{ constraint.equation }} (Contraintes {{ constraint.id }})</li>
         {% endfor %}
       </ul>
-      <a href="{% url 'solveur:index' %}" class="btn btn-danger d-block w-25">Retour</a>
     </div>
 
     <form method="post" action="{% url "solveur:resolve" %}" class="mt-3">
       {% csrf_token %}
       <input type="hidden" name="lp_problem" value="{{ result|safe }}" />
-      <button type="submit" class="btn btn-success">Résoudre</button>
+      <button type="submit" class="btn btn-primary">Résoudre</button>
     </form>
   </div>
 {% endblock %}

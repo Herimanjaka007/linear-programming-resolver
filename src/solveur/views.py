@@ -19,15 +19,16 @@ def index(request):
 
             respond strictly in string can be Deserialisable in json:
 
-            
+
             Objective: Maximize Z = a1*x1 + a2*x2 + ... + an*xn
 
             Constraints:
             c1: a1*x1 + a2*x2 <= b1
             c2: a1*x1 + a2*x2 <= b2
             ...
-            
-            Do not include any additional information or commentary outside this format.
+
+            Do not include any additional information or commentary outside
+            this format.
             """.format(
                 text
             )

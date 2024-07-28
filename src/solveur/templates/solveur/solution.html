@@ -1,17 +1,22 @@
-{% extends "solveur/base.html" %}
+{% extends 'solveur/base.html' %}
 
-{% block title %}Solution du Problème Linéaire{% endblock %}
+{% block title %}
+  Solution du Problème Linéaire
+{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <h1>Solution du Problème Linéaire</h1>
-        <ul>
-            {% for var, value in solution.items %}
-                <li>{{ var }}: {{ value }}</li>
-            {% endfor %}
+  <div class="container mt-5">
+    <h1>Résultats de la Solution</h1>
+    <div class="card">
+      <div class="card-body">
+        <h3>Solutions</h3>
+        <ul class="list-group">
+          {% for var, value in data.solution.items %}
+            <li class="list-group-item">{{ var }}: {{ value }}</li>
+          {% endfor %}
         </ul>
-        <a href="{% url 'solveur:index' %}" class="btn btn-primary">Retour</a>
+      </div>
     </div>
-</div>
+  </div>
+  <a href="{% url 'solveur:index' %}" class="btn btn-danger">Retour</a>
 {% endblock %}

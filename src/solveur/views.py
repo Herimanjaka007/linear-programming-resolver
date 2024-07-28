@@ -8,6 +8,9 @@ import json
 
 from .utils import parse_constraints, parse_objective
 
+genai.configure(api_key="AIzaSyD83g8POO_8rslMcPD5JrEKdvN7d4Fd-LE")
+model = genai.GenerativeModel("gemini-1.5-flash")
+
 
 def index(request):
     if request.method == "POST":
@@ -16,8 +19,6 @@ def index(request):
         try:
             img = Image.open(image)
             text = pytesseract.image_to_string(img)
-
-            genai.configure(api_key="AIzaSyD83g8POO_8rslMcPD5JrEKdvN7d4Fd-LE")
 
             prompt = """
             {}
@@ -37,7 +38,6 @@ def index(request):
                 text
             )
 
-            model = genai.GenerativeModel("gemini-1.5-flash")
             response = model.generate_content(prompt)
             current_res = (
                 response.candidates[0]
@@ -69,4 +69,32 @@ def index(request):
 
 
 def resolve(request):
-    pass
+    if request.method == "POST":
+        prompt = f"""
+        Solve this linear problem in json where i provide the type of the linear problem and all of the constraint using simplex
+        Do not include any additional information or commentary.
+
+        
+        f{request.POST["lp_problem"]}
+"""
+        response = model.generate_content(prompt)
+        current_res = (
+            response.candidates[0]
+            .content.parts[0]
+            .text.replace("```", "")
+            .replace("\n", "")
+        )
+        json_match = re.search(r"{.*}", current_res)
+
+        if json_match:
+            json_str = json_match.group(0)
+            print(json_str)
+            data = json.loads(json_str)
+
+        return render(
+            request,
+            "solveur/solution.html",
+            {"data": data},
+        )
+    else:
+        return redirect(reverse("solveur:index"))

@@ -16,7 +16,7 @@
         {% csrf_token %}
         <div class="form-group mb-5">
           <label for="imageInput">Télécharger une Image</label>
-          <input type="file" class="form-control-file" id="imageInput" name="image" />
+          <input type="file" class="form-control-file" id="imageInput" name="image"  required/>
         </div>
         <button type="submit" class="btn btn-primary">Modeliser</button>
       </form>
